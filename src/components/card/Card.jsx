@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import{Link} from 'react-router-dom'
 import Modals from '../Modal/Modal'
 
-const Card = ({room}) => {
+const Card = ({room, fromDate, toDate}) => {
     const [modalShow, setModalShow] = useState(false)
    
     return (
@@ -15,8 +15,9 @@ const Card = ({room}) => {
                 <p>Max count: {room.maxcount}</p>
                 <p>phone: {room.phonenumber}</p>
                 <p>Type: {room.type}</p>
+                
                 <div>
-                    <Link to={`/book/${room._id}`}>
+                    <Link to={`/book/${room._id}/${fromDate}/${toDate}`}>
                     <button className="btn btn-dark mx-2 float-end">Book now</button>
                     </Link>
                     <button onClick={() => setModalShow(true)} className="btn btn-dark float-end">view details</button>

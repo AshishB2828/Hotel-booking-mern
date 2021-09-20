@@ -1,21 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import axios from 'axios'
+import moment from 'moment'
 import Loading from '../components/Loading/Loading'
 import Error from '../components/Error/Error'
 
-const RoomDescription = () => {
-    const {roomId} =useParams()
+const RoomDescription = ({match}) => {
+    const roomId =match.params.roomId
+    const fromDate =moment(match.params.fromDate, 'DD-MM-YYYY')
+    const toDate =moment(match.params.toDate, 'DD-MM-YYYY')
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
     const [room, setRoom] = useState({})
-
+    
+    
+    const totalDays = moment.duration(toDate.diff(fromDate)).asDays()+1
+   
     const getRoom = async (roomId) => {
         setLoading(true)
         try {
             const {data} = await axios.get(`/api/rooms/${roomId}`)
             setRoom(data.room)
             setLoading(false)
+
         } catch (error) {
             console.log(error.message)
             setLoading(false)
@@ -41,14 +48,14 @@ const RoomDescription = () => {
                                 <h1>Booking Details</h1>
                                 <hr />
                                 <p>Name: Ashish B</p>
-                                <p>From Date : </p>
-                                <p>To Date : </p>
+                                <p>From Date : {fromDate._i}</p>
+                                <p>To Date : {toDate._i}</p>
                                 <p>Max count :3 </p>
                             </div>
                             <div>
                                 <h1>Amount: </h1>
                                 <hr />
-                                <p>Total days: </p>
+                                <p>Total days: {totalDays} </p>
                                 <p>Rent per day: </p>
                                 <p>Total amount: </p>
                             </div>
