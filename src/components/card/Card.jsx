@@ -17,9 +17,10 @@ const Card = ({room, fromDate, toDate}) => {
                 <p>Type: {room.type}</p>
                 
                 <div>
+                    {fromDate && toDate && 
                     <Link to={`/book/${room._id}/${fromDate}/${toDate}`}>
                     <button className="btn btn-dark mx-2 float-end">Book now</button>
-                    </Link>
+                    </Link>}
                     <button onClick={() => setModalShow(true)} className="btn btn-dark float-end">view details</button>
                 </div>
            </div>

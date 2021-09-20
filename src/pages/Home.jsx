@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Card from '../components/card/Card'
-import { DatePicker, Space } from 'antd';
+import { DatePicker } from 'antd';
 import moment from 'moment';
 import 'antd/dist/antd.css'
 
@@ -9,6 +9,7 @@ import 'antd/dist/antd.css'
 const Home = () => {
     const [loading, setLoading] = useState(false)
     const [rooms, setRooms] = useState([])
+    const [filterRooms, setFilterRooms] = useState([])
     const { RangePicker } = DatePicker;
     const [fromDate, setFromDate] = useState('')
     const [toDate, setToDate] = useState('')
@@ -19,6 +20,7 @@ const Home = () => {
         try {
             const {data} = await axios.get("/api/rooms/")
             setRooms(data.allrooms)
+            setFilterRooms(data.allrooms)
             setLoading(false)
         } catch (error) {
             console.log(error.message)
@@ -31,8 +33,57 @@ const Home = () => {
     },[])
 
    const filterByDate= (dates)=>{
-       setFromDate(moment(dates[0]).format('DD-MM-YYYY'))
-       setToDate(moment(dates[1]).format('DD-MM-YYYY'))
+       console.log(dates)
+       setFromDate(moment(dates[0]).format("DD-MM-YYYY"))
+       setToDate(moment(dates[1]).format("DD-MM-YYYY"))
+       let tempRooms = []
+       let isAvailable=false ;
+       for(const room of filterRooms) {
+           
+                if(room.currentbookings.length>0){
+                   for( const booking of room.currentbookings){
+
+                    console.log(booking.fromDate, booking.toDate)
+                    // let new Date(dates[0]._d) = new Date(dates[0]._d)
+                    // let new Date(dates[1]._d) = new Date(dates[1]._d)
+                    if(
+                        !((new Date(booking.fromDate).setHours(0,0,0,0)<=new Date(dates[0]._d).setHours(0,0,0,0)) && new Date(booking.toDate).setHours(0,0,0,0)>=new Date(dates[1]._d).setHours(0,0,0,0))
+                        && !((new Date( booking.fromDate).setHours(0,0,0,0) >= new Date(dates[0]._d).setHours(0,0,0,0)) && new Date(dates[1]._d).setHours(0,0,0,0)>= new Date(booking.toDate).setHours(0,0,0,0))
+                        && !((new Date( booking.fromDate).setHours(0,0,0,0) >= new Date(dates[0]._d).setHours(0,0,0,0)) && 
+                                                    ((new Date(booking.fromDate).setHours(0,0,0,0)<=new Date(dates[1]._d).setHours(0,0,0,0)) && new Date(booking.toDate).setHours(0,0,0,0)>=new Date(dates[1]._d).setHours(0,0,0,0)))
+                        && !((new Date( booking.fromDate).setHours(0,0,0,0) <= new Date(dates[1]._d).setHours(0,0,0,0)) &&
+                                                                                (((new Date(booking.fromDate).setHours(0,0,0,0)<=new Date(dates[0]._d).setHours(0,0,0,0)) && new Date(booking.toDate).setHours(0,0,0,0)>=new Date(dates[0]._d).setHours(0,0,0,0)))
+                        )
+                    )
+                    // if(!moment(fromDate).isBetween(booking.fromDate, booking.toDate)
+                    // && !moment(toDate).isBetween(booking.fromDate, booking.toDate)
+                    // )
+                    {
+
+                            if (
+
+                                new Date(dates[0]._d).setHours(0,0,0,0) !==new Date(booking.fromDate).setHours(0,0,0,0) &&
+                                new Date(dates[0]._d).setHours(0,0,0,0) !==new Date(booking.toDate).setHours(0,0,0,0) &&
+                                new Date(dates[1]._d).setHours(0,0,0,0) !== new Date(booking.fromDate ).setHours(0,0,0,0)&&
+                                new Date(dates[1]._d).setHours(0,0,0,0) !== new Date(booking.toDate ).setHours(0,0,0,0)
+                            ){
+                                isAvailable =true
+                                console.log("avi;")
+                            }
+                    }else{
+                        isAvailable = false
+                    }
+                   }
+                }
+                if(isAvailable === true || room.currentbookings.length === 0){
+                    tempRooms.push(room)
+                }
+                setRooms(tempRooms)
+           
+         
+        };
+        
+
    }
 
     return (
