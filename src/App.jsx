@@ -6,6 +6,7 @@ import NavBar from './components/NavBar/NavBar';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
 import Home from './pages/Home';
+import Profile from './pages/Profile';
 import RoomDescription from './pages/RoomDescription';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" component={Home} exact />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
+          <Route path="/profile" component={Profile} />
           <Route path="/book/:roomId/:fromDate/:toDate" component={RoomDescription} exact />
 
         </Switch>

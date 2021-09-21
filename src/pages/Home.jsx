@@ -13,6 +13,8 @@ const Home = () => {
     const { RangePicker } = DatePicker;
     const [fromDate, setFromDate] = useState('')
     const [toDate, setToDate] = useState('')
+    const [search, setSearch] = useState('')
+    const [type, setType] = useState('all')
     
 
     const getAllRooms = async () =>{
@@ -86,6 +88,19 @@ const Home = () => {
 
    }
 
+   const filterBySearch =()=>{
+
+    const tempRooms =filterRooms.filter(room=>room.name.toLowerCase().includes(search.toLowerCase()))
+    setRooms(tempRooms)
+   }
+
+   const filterByType =(val)=>{
+       setType(val)
+       if(val ==='all')
+       return setRooms(filterRooms)
+        const temprooms = filterRooms.filter(room => room.type.toLowerCase() == val.toLowerCase())
+        setRooms(temprooms)
+   }
     return (
 
        <div className="container">
@@ -99,6 +114,26 @@ const Home = () => {
                          />
                         {/* </Space> */}
                     </div>
+
+                    <div className="col-md-3">
+                        <input 
+                            className="form-control" 
+                            placeholder="search rooms" 
+                            type="text"
+                            value={search}
+                            onChange={(e)=>setSearch(e.target.value)}
+                            onKeyUp={filterBySearch}
+                             />
+                    </div>
+
+                    <div className="col-md-3" value={type} onChange={e=> filterByType(e.target.value)}>
+                    <select name="" id="" className="form-control">
+                        <option value="all">All</option>
+                        <option value="delux">Delux</option>
+                        <option value="non-delux">Non-Delux</option>
+                    </select>
+                    </div>
+                   
                 </div>
             <div className="row justify-content-center mt-5">
             {loading? <h1>Loading....</h1>:(

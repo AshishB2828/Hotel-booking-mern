@@ -12,7 +12,7 @@ const NavBar = () => {
         <div>
            <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
-                <a className="navbar-brand" href="#">HotelMotel</a>
+                <a className="navbar-brand" href="/">HotelMotel</a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
                 </button>
@@ -26,8 +26,10 @@ const NavBar = () => {
                     <Link className="nav-link" to="/login">Login</Link>
                     </li></>: <>
                         <li className="nav-item">  
-                        <Link className="nav-link" to="/">Bookings</Link> </li>
-                        <li className="nav-item nav-link"> {user.name} </li>
+                        <Link className="nav-link" to="/bookings">Bookings</Link> </li>
+                        <li className="nav-item ">
+                            <Link className="nav-link" to="/profile"> {user.name}</Link>
+                         </li>
                         <li className="nav-item"> 
                         <span className="nav-link" 
                         onClick={()=>logOut()}

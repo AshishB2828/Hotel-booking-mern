@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
+import StripeCheckOut from 'react-stripe-checkout'
 import axios from 'axios'
 import moment from 'moment'
+import Swal from 'sweetalert2'
 import Loading from '../components/Loading/Loading'
 import Error from '../components/Error/Error'
 
@@ -35,7 +36,7 @@ const RoomDescription = ({match}) => {
         setTotalAmount(totalDays*room?.rentperday)
     },[roomId, room?.rentperday])
 
-    const handleBookRoom = async()=>{
+    const onToken = async(token)=>{
 
         const bookingDetails = {
             room:room?.name,
@@ -45,13 +46,21 @@ const RoomDescription = ({match}) => {
             toDate: new Date(toDate._d).toDateString(),
             totalDays,
             totalAmount,
+            token
         }
 
         try {
+            setLoading(true)
             const {data} = await axios.post('/api/bookings/bookroom', bookingDetails)
+            Swal.fire('Congratulations', 'Your Room Booked Successfully','success').then(
+                result => window.location.href="/bookings"
+            )
             console.log(data)
+            setLoading(false)
         } catch (error) {
+            setLoading(false)
             console.log(error.response)
+            Swal.fire('Error', 'Something went wrong','error')
         }
     }
 
@@ -82,10 +91,17 @@ const RoomDescription = ({match}) => {
                                 <p>Total amount: {totalAmount} </p>
                             </div>
                             <div>
+                               
+                                <StripeCheckOut
+                                token={onToken}
+                                current="INR"
+                                amount={totalAmount * 100}
+                                stripeKey="pk_test_51JbpmqSDxmkhmiTDaDrFSagqiKSFDd8ktKgR972F3Z74cl2Z0VK9nfxlzngzZLNRqCxLX6VB9ixPMJPzsHpbTcPk007uQRm881"
+                                >
                                 <button 
                                 className="btn btn-primary"
-                                onClick={handleBookRoom}
                                 >Pay now</button>
+                                </StripeCheckOut>
                             </div>
                         </div>
 
