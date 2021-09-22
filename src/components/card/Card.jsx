@@ -6,30 +6,27 @@ const Card = ({room, fromDate, toDate}) => {
     const [modalShow, setModalShow] = useState(false)
    
     return (
-        <div className="row card__room border-1 border rounded-3 p-3">
-           <div className="col-md-4">
-                <img src={room.imageurls[0]} className="smallimg" />
-           </div>
-           <div className="col-md-8 card__text">
-                <h2>{room.name}</h2>
-                <p>Max count: {room.maxcount}</p>
-                <p>phone: {room.phonenumber}</p>
-                <p>Type: {room.type}</p>
-                
-                <div>
-                    {fromDate && toDate && 
-                    <Link to={`/book/${room._id}/${fromDate}/${toDate}`}>
-                    <button className="btn btn-dark mx-2 float-end">Book now</button>
-                    </Link>}
-                    <button onClick={() => setModalShow(true)} className="btn btn-dark float-end">view details</button>
-                </div>
-           </div>
-            <Modals 
+
+        <div className="card__container">
+        <img src={room.imageurls[0]} 
+        alt="" className="card__img"/>
+        <div className="card__body">
+            <h2 className="card__title">{room.name.substring(0,20)}...</h2>
+            <p className="card__price">$<span>{room.rentperday}</span></p>
+            <p className="card__type">type: {room.type}</p>
+            <div className="btns">
+                <button  onClick={() => setModalShow(true)} className="card__btn">view details</button>
+                {fromDate && toDate && 
+                 <Link to={`/book/${room._id}/${fromDate}/${toDate}`}>
+                  <button className="card__btn mx-2">Book now</button>
+                  </Link>}
+            </div>
+        </div>
+        <Modals 
             room={room}
             show={modalShow}
             onHide={() => setModalShow(false)} />
-
-        </div>
+    </div>
     )
 }
 

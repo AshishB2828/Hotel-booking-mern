@@ -35,7 +35,8 @@ const Home = () => {
     },[])
 
    const filterByDate= (dates)=>{
-       console.log(dates)
+        if(!dates) return
+        
        setFromDate(moment(dates[0]).format("DD-MM-YYYY"))
        setToDate(moment(dates[1]).format("DD-MM-YYYY"))
        let tempRooms = []
@@ -103,18 +104,18 @@ const Home = () => {
    }
     return (
 
-       <div className="container">
-
-                <div className="row mt-5">
+       <div className="wrapper__main">
+                <h3>Find your fav rooms</h3>
+                <div className="row justify-content-center mt-5">
                     <div className="col-md-3">
                         {/* <Space direction="vertical" size={12}> */}
                         <RangePicker
+                        className="form-control"
                          format="DD-MM-YYYY"
                         onChange={ filterByDate}
                          />
                         {/* </Space> */}
                     </div>
-
                     <div className="col-md-3">
                         <input 
                             className="form-control" 
@@ -130,16 +131,18 @@ const Home = () => {
                     <select name="" id="" className="form-control">
                         <option value="all">All</option>
                         <option value="delux">Delux</option>
-                        <option value="non-delux">Non-Delux</option>
+                        <option value="nondelux">Non-Delux</option>
                     </select>
                     </div>
                    
                 </div>
-            <div className="row justify-content-center mt-5">
+                <h4 >Available rooms</h4>
+                 <hr/>
+            <div className=" justify-content-center mt-5">
             {loading? <h1>Loading....</h1>:(
-                <div>
+                <div className="row justify-content-center">
                 {
-                rooms && rooms.map(room => <div key={room._id} className="col-md-8 mb-5">
+                rooms && rooms.map(room => <div key={room._id} className="col-md-3 mb-5">
                                     <Card 
                                     room={room}
                                     fromDate={fromDate}

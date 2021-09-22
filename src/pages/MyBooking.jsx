@@ -31,25 +31,26 @@ const MyBooking = () => {
         try {
             setLoading(true)
             const {data} = await axios.post('/api/bookings/cancel', {bookingId, roomId});
-            console.log(data)
             setLoading(false)
         } catch (error) {
             setLoading(false)
-            setError(true)
-            console.log(error.response)
-            
+            setError(true)  
         }
     }
     return (
         <div>
             {loading && <Loading />}
             {error && <Error />}
-            {bookings && bookings.map((booking)=> <div className="card p-4 m-2" key={booking._id}>
+            {bookings && bookings.map((booking)=> 
+            <div className="card w-md-50 p-4 m-2" key={booking._id}>
+               
                 <h5>{booking.room}</h5>
-                Paid : <h5>{booking.totalAmount}</h5>
-                <strong>status: {booking.status==="booked" ? 'Confirmed': 'Canceld'}</strong>
+                <p>{booking.fromDate} to {booking.toDate}</p>
+                <p>Paid : <span>{booking.totalAmount}</span></p>
+                 
+                <strong className={booking.status==="booked" ? 'text-success':'text-danger'}>status: {booking.status==="booked" ? 'Confirmed': 'Canceld'}</strong>
                {booking.status==="booked" && 
-               <button className="btn btn-primary" onClick={()=>cancelBooking(booking._id, booking.roomId)}>
+               <button className="btn btn-danger" onClick={()=>cancelBooking(booking._id, booking.roomId)}>
                    Cancel
                 </button>}
             </div>)}

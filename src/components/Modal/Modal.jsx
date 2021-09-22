@@ -20,7 +20,7 @@ const Modals = (props) => {
           {props.room.description.substring(0,100)}
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={props.onHide}>Close</Button>
+          <Button className="card__btn" onClick={props.onHide}>Close</Button>
         </Modal.Footer>
       </Modal>
     )
