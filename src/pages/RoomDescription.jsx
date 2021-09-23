@@ -26,7 +26,7 @@ const RoomDescription = ({match}) => {
             setLoading(false)
             
         } catch (error) {
-            console.log(error.message)
+
             setLoading(false)
             setError(true)
         }
@@ -57,11 +57,11 @@ const RoomDescription = ({match}) => {
             Swal.fire('Congratulations', 'Your Room Booked Successfully','success').then(
                 result => window.location.href="/bookings"
             )
-            console.log(data)
+          
             setLoading(false)
         } catch (error) {
             setLoading(false)
-            console.log(error.response)
+           
             Swal.fire('Error', 'Something went wrong','error')
         }
     }
@@ -104,7 +104,7 @@ const RoomDescription = ({match}) => {
                                 token={onToken}
                                 currency="INR"
                                 amount={totalAmount * 100}
-                                stripeKey="pk_test_51JbpmqSDxmkhmiTDaDrFSagqiKSFDd8ktKgR972F3Z74cl2Z0VK9nfxlzngzZLNRqCxLX6VB9ixPMJPzsHpbTcPk007uQRm881"
+                                stripeKey={process.env.REACT_APP_STRIPE}
                                 >
                                 <button 
                                 className="card__btn"

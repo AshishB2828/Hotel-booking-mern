@@ -7,6 +7,7 @@ const NavBar = () => {
         localStorage.removeItem('hotel_user')
         window.location.href='/'
     }
+    
 
     return (
         <div>
