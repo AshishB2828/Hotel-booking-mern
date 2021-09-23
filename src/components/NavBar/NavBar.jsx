@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {  } from 'react'
 import {Link} from 'react-router-dom'
 
 const NavBar = () => {
@@ -12,7 +12,7 @@ const NavBar = () => {
         <div>
            <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
-                <a className="navbar-brand" href="/">HotelMotel</a>
+                <a className="navbar-brand fw-bold " href="/">HotelMotel</a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
                 </button>
@@ -25,7 +25,7 @@ const NavBar = () => {
                     <li className="nav-item">
                     <Link className="nav-link" to="/login">Login</Link>
                     </li></>: <>
-                        <li className="nav-item">  
+                       { user.token && user.isAdmin &&<> <li className="nav-item">  
                         <Link className="nav-link" to="/all-bookings">all-Bookings</Link> </li>
                         <li className="nav-item">  
                         <Link className="nav-link" to="/all-rooms">all-Rooms</Link> </li>
@@ -33,6 +33,8 @@ const NavBar = () => {
                         <Link className="nav-link" to="/all-users">Users</Link> </li>
                         <li className="nav-item">  
                         <Link className="nav-link" to="/bookings">Bookings</Link> </li>
+                        </>
+                        }
                         <li className="nav-item ">
                             <Link className="nav-link" to="/profile"> {user.name}</Link>
                          </li>

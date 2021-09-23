@@ -13,12 +13,12 @@ const Register = () => {
     const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
+    const [errorMsg, setErrorMsg] = useState('')
 
     const handleRegister =()=>{
 
         if(password===confirmPassword){
             const user ={name,email,password}
-            console.log(user)
             userRegister(user)
         }else{
             alert("password do not match")
@@ -27,24 +27,25 @@ const Register = () => {
     const userRegister =async(user)=>{
         try {
             setLoading(true)
-            const {data} = await postAPICalls('/api/auth/register', user)
+            const {data} = await postAPICalls('auth/register', user)
             setLoading(false)
             setSuccess(true)
         } catch (error) {
             console.log(error.response)
             setLoading(false)
+            setErrorMsg(error.response?.data?.message)
             setError(true)
         }
     }
     return (
         <div>
             { loading && <Loading />}
-            {error && <Error />}
+            {error && <Error msg={errorMsg}/>}
             {success && <Success message={'registration success'} />}
             <div className="row justify-content-center mt-5">
-                <div className="col-md-5">
+                <div className="col-md-5 my-4">
                     <div>
-                        <h1>Register</h1>
+                        <h1 className="text-muted text-start">Register</h1>
                         <div className="m-2">
                             <input type="text" className="form-control" placeholder="name"
                             value ={name}
@@ -73,7 +74,7 @@ const Register = () => {
                         </div>
 
                         <div className="m-2">
-                            <button className="btn btn-primary"
+                            <button className="btn card__btn w-100"
                             disabled ={loading}
                             onClick={handleRegister}
                             >Register</button>

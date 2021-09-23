@@ -1,4 +1,3 @@
-import axios from 'axios'
 import React, { useState } from 'react'
 import Swal from 'sweetalert2'
 
@@ -38,7 +37,6 @@ const AddRooms = () => {
             )
         } catch (error) {
             setLoading(false)
-            console.log(error.response)
             setError(true)
             Swal.fire('Oops', 'Something Went Wrong', "error")
             

@@ -1,4 +1,4 @@
-import axios from 'axios'
+
 import React, { useEffect, useState } from 'react'
 import Error from '../components/Error/Error'
 import Loading from '../components/Loading/Loading'
@@ -35,6 +35,7 @@ const MyBooking = () => {
             setLoading(true)
             const {data} = await postAPICalls('bookings/cancel', {bookingId, roomId}, jwtToken);
             setLoading(false)
+            if(data) window.location.href="/bookings"
         } catch (error) {
             setLoading(false)
             setError(true)  

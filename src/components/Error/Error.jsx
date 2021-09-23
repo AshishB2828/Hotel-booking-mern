@@ -1,13 +1,10 @@
-import React, { useState } from "react";
+import React, {  } from "react";
 
 
-const Error = () => {
-
-   
-
+const Error = ({msg}) => {
     return (
         <div>
-            <h1 className="text-danger">Something went wrong</h1>
+            <h1 className="text-danger">{msg? msg:'Something went wrong'}</h1>
         </div>
     )
 }

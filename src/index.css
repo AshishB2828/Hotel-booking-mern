@@ -24,6 +24,12 @@
 .navbar-nav{
   margin-left: auto;
 }
+.navbar-brand{
+  transition: all 300ms ease;
+}
+.navbar-brand:hover{
+  color: var(--clr-light-red) !important;
+}
 
 .wrapper__main{
   padding: 20px;

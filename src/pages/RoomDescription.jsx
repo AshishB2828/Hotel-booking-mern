@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import StripeCheckOut from 'react-stripe-checkout'
-import axios from 'axios'
 import moment from 'moment'
 import Swal from 'sweetalert2'
 import {getAPICalls, postAPICalls} from '../utils/APICalls'
@@ -15,8 +14,8 @@ const RoomDescription = ({match}) => {
     const [error, setError] = useState(false)
     const [room, setRoom] = useState({})
     const [totalAmount, setTotalAmount] = useState(0)
-    let loggedInUser = JSON.parse(localStorage.getItem('hotel_user'))?.name
-    const jwtToken = JSON.parse(localStorage.getItem('hotel_user')).token
+    let loggedInUser = JSON.parse(localStorage.getItem('hotel_user'))
+    const jwtToken = JSON.parse(localStorage.getItem('hotel_user'))?.token
 
     const totalDays = moment.duration(toDate.diff(fromDate)).asDays()+1
     const getRoom = async (roomId) => {
@@ -34,9 +33,10 @@ const RoomDescription = ({match}) => {
     }
     
     useEffect(()=>{
+        if(!loggedInUser) window.location.href = '/login'
         getRoom(roomId)
         setTotalAmount(totalDays*room?.rentperday)
-    },[roomId, room?.rentperday])
+    },[roomId, room?.rentperday, totalDays])
 
     const onToken = async(token)=>{
 
@@ -70,48 +70,8 @@ const RoomDescription = ({match}) => {
         <div className="wrapper__main">
             {loading?<Loading />:error?<Error/>:(
                 <div>
-                    {/* <div className="row justify-content-center mt-5">
-                        <div className="col-md-5">
-                            {room.name}
-                            <img src={room.imageurls[0]} className="bigimg" />
-                        </div>
-
-                        <div className="col-md-5 " style={{textAlign:'right'}}>
-                            <div>
-                                <h1>Booking Details</h1>
-                                <hr />
-                                <p>Name: {loggedInUser}</p>
-                                <p>From Date : {fromDate._i}</p>
-                                <p>To Date : {toDate._i}</p>
-                                <p>Max count :3 </p>
-                            </div>
-                            <div>
-                                <h1>Amount: </h1>
-                                <hr />
-                                <p>Total days: {totalDays} </p>
-                                <p>Rent per day: {room.rentperday} </p>
-                                <p>Total amount: {totalAmount} </p>
-                            </div>
-                            <div>
-                               
-                                <StripeCheckOut
-                                token={onToken}
-                                current="INR"
-                                amount={totalAmount * 100}
-                                stripeKey="pk_test_51JbpmqSDxmkhmiTDaDrFSagqiKSFDd8ktKgR972F3Z74cl2Z0VK9nfxlzngzZLNRqCxLX6VB9ixPMJPzsHpbTcPk007uQRm881"
-                                >
-                                <button 
-                                className="btn btn-primary"
-                                >Pay now</button>
-                                </StripeCheckOut>
-                            </div>
-                        </div>
-
-                        
-                    </div> */}
                     <div >
                         <h1 className="text-start fs-2 text-muted mx-md-5 mt-4">{room.name}</h1>
-                        <p className="text-start fw-normal  mx-md-5 ">Nodia</p>
                         <div className="row justify-content-center">
                             <div className="col-md-7 b p-4">
                                 <img src={room.imageurls[0]} alt="" className="img-fluid"/>
@@ -126,7 +86,7 @@ const RoomDescription = ({match}) => {
                                 <p>contact: {room.phonenumber}</p>
                                 <div className="">
                                     <h2>Booking details</h2>
-                                    <p>Name: {loggedInUser}</p>
+                                    <p>Name: {loggedInUser?.name}</p>
                                     <p>From Date : {fromDate._i}</p>
                                     <p>To Date : {toDate._i}</p>
                                     <p>Max count :3 </p>
