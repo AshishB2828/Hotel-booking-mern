@@ -39,6 +39,10 @@ const NavBar = () => {
                         <li className="nav-item ">
                             <Link className="nav-link" to="/profile"> {user.name}</Link>
                          </li>
+                        <li className="nav-item ">
+                            <a className="nav-link" href="" target="_blank">git</a>
+                         </li>
+                         <li></li>
                         <li className="nav-item"> 
                         <span className="nav-link" 
                         onClick={()=>logOut()}
