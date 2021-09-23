@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import Error from '../../components/Error/Error'
 import Loading from '../../components/Loading/Loading'
 import axios from 'axios'
+import { getAPICalls } from '../../utils/APICalls'
 const AllBookings = () => {
 
+    const jwtToken = JSON.parse(localStorage.getItem('hotel_user')).token
     const [bookings, setBookings] = useState([])
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -12,7 +14,7 @@ const AllBookings = () => {
 
         try {
             setLoading(true)
-           const{data} = await axios.get('/api/bookings/all-bookings')
+           const{data} = await getAPICalls('bookings/all-bookings', jwtToken)
             setBookings(data)
             setLoading(false)
             setError(false)

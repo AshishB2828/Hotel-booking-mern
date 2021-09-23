@@ -1,10 +1,13 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import Swal from 'sweetalert2'
+
+import {postAPICalls} from '../../utils/APICalls'
 import Loading from '../../components/Loading/Loading'
 
 const AddRooms = () => {
 
+    const jwtToken = JSON.parse(localStorage.getItem('hotel_user')).token
 
     const [name, setName] = useState('')
     const [maxcount, setMaxCount] = useState(0)
@@ -28,7 +31,7 @@ const AddRooms = () => {
 
         try {
             setLoading(true)
-            const {data} = await axios.post('/api/rooms/add', newRoom)
+            const {data} = await postAPICalls('rooms/add', newRoom, jwtToken)
             setLoading(false)
             Swal.fire('Congradulation', 'New Room Added', "success").then(
                 result=> window.location.reload()

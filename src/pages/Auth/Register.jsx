@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import axios from 'axios'
 import Loading from '../../components/Loading/Loading'
 import Error from '../../components/Error/Error'
 import Success from '../../components/Success/Success'
+import { postAPICalls } from '../../utils/APICalls'
 
 const Register = () => {
 
@@ -27,7 +27,7 @@ const Register = () => {
     const userRegister =async(user)=>{
         try {
             setLoading(true)
-            const {data} = await axios.post('/api/auth/register', user)
+            const {data} = await postAPICalls('/api/auth/register', user)
             setLoading(false)
             setSuccess(true)
         } catch (error) {

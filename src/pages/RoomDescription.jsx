@@ -3,6 +3,7 @@ import StripeCheckOut from 'react-stripe-checkout'
 import axios from 'axios'
 import moment from 'moment'
 import Swal from 'sweetalert2'
+import {getAPICalls, postAPICalls} from '../utils/APICalls'
 import Loading from '../components/Loading/Loading'
 import Error from '../components/Error/Error'
 
@@ -15,12 +16,13 @@ const RoomDescription = ({match}) => {
     const [room, setRoom] = useState({})
     const [totalAmount, setTotalAmount] = useState(0)
     let loggedInUser = JSON.parse(localStorage.getItem('hotel_user'))?.name
+    const jwtToken = JSON.parse(localStorage.getItem('hotel_user')).token
 
     const totalDays = moment.duration(toDate.diff(fromDate)).asDays()+1
     const getRoom = async (roomId) => {
         setLoading(true)
         try {
-            const {data} = await axios.get(`/api/rooms/${roomId}`)
+            const {data} = await getAPICalls(`rooms/${roomId}`, null)
             setRoom(data.room)
             setLoading(false)
             
@@ -51,7 +53,7 @@ const RoomDescription = ({match}) => {
 
         try {
             setLoading(true)
-            const {data} = await axios.post('/api/bookings/bookroom', bookingDetails)
+            const {data} = await postAPICalls('bookings/bookroom', bookingDetails, jwtToken)
             Swal.fire('Congratulations', 'Your Room Booked Successfully','success').then(
                 result => window.location.href="/bookings"
             )

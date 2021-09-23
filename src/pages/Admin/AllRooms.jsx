@@ -3,6 +3,7 @@ import Error from '../../components/Error/Error'
 import Loading from '../../components/Loading/Loading'
 import axios from 'axios'
 import AddRooms from './AddRooms'
+import { getAPICalls } from '../../utils/APICalls'
 const AllRooms = () => {
 
     const [rooms, setRooms] = useState([])
@@ -14,7 +15,7 @@ const AllRooms = () => {
 
         try {
             setLoading(true)
-           const{data} = await axios.get('/api/rooms/')
+           const{data} = await getAPICalls('rooms')
     
             setRooms(data.allrooms)
             setLoading(false)

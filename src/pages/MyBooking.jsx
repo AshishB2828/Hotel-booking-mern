@@ -2,23 +2,26 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import Error from '../components/Error/Error'
 import Loading from '../components/Loading/Loading'
+import { postAPICalls } from '../utils/APICalls'
 
 const MyBooking = () => {
     const user = JSON.parse(localStorage.getItem('hotel_user'))
     const [bookings, setBookings] = useState()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
+    const jwtToken = JSON.parse(localStorage.getItem('hotel_user')).token
+    
     const getMyBookings=async()=>{
         try {
             setLoading(true)
-            const {data} = await axios.post('/api/bookings/my-bookings',{id: user._id})
+            const {data} = await postAPICalls('bookings/my-bookings',{id: user._id}, jwtToken)
             setBookings(data)
             setLoading(false)
             console.log(data)
         } catch (error) {
             setLoading(false)
             setError(true)
-            console.log(error.response)
+            console.log(error)
         }
     }
 
@@ -30,7 +33,7 @@ const MyBooking = () => {
         
         try {
             setLoading(true)
-            const {data} = await axios.post('/api/bookings/cancel', {bookingId, roomId});
+            const {data} = await postAPICalls('bookings/cancel', {bookingId, roomId}, jwtToken);
             setLoading(false)
         } catch (error) {
             setLoading(false)

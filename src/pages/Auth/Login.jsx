@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import Loading from '../../components/Loading/Loading'
 import Error from '../../components/Error/Error'
+import { postAPICalls } from '../../utils/APICalls'
 
 const Login = () => {
 
@@ -22,7 +23,7 @@ const Login = () => {
     const userLogin =async(user)=>{
         try {
             setLoading(true)
-            const {data} = await axios.post('/api/auth/login', user)
+            const {data} = await postAPICalls('auth/login', user)
             setLoading(false)
             localStorage.setItem('hotel_user', JSON.stringify(data))
             window.location.href='/'

@@ -4,6 +4,7 @@ import Card from '../components/card/Card'
 import { DatePicker } from 'antd';
 import moment from 'moment';
 import 'antd/dist/antd.css'
+import { getAPICalls } from '../utils/APICalls';
 
 
 const Home = () => {
@@ -20,7 +21,7 @@ const Home = () => {
     const getAllRooms = async () =>{
         setLoading(true)
         try {
-            const {data} = await axios.get("/api/rooms/")
+            const {data} = await getAPICalls("rooms", null)
             setRooms(data.allrooms)
             setFilterRooms(data.allrooms)
             setLoading(false)

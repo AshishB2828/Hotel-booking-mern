@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import Error from '../../components/Error/Error'
 import Loading from '../../components/Loading/Loading'
 import axios from 'axios'
+import { getAPICalls } from '../../utils/APICalls'
 const AllUsers = () => {
-
+    
+    const jwtToken = JSON.parse(localStorage.getItem('hotel_user')).token
     const [users, setUsers] = useState([])
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -12,7 +14,7 @@ const AllUsers = () => {
 
         try {
             setLoading(true)
-           const{data} = await axios.get('/api/auth/all-user')
+           const{data} = await getAPICalls('auth/all-user', jwtToken)
             setUsers(data)
             setLoading(false)
             setError(false)
