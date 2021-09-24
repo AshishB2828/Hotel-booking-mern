@@ -5,6 +5,7 @@ import Swal from 'sweetalert2'
 import {getAPICalls, postAPICalls} from '../utils/APICalls'
 import Loading from '../components/Loading/Loading'
 import Error from '../components/Error/Error'
+import Wallet from '@material-ui/icons/AccountBalanceWallet'
 
 const RoomDescription = ({match}) => {
     const roomId =match.params.roomId
@@ -108,7 +109,7 @@ const RoomDescription = ({match}) => {
                                 >
                                 <button 
                                 className="card__btn"
-                                >Pay now</button>
+                                ><Wallet/> {totalAmount} Pay now</button>
                                 </StripeCheckOut>
                             </div>
                             </div>

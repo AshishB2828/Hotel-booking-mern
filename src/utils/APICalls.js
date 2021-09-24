@@ -1,8 +1,8 @@
 import axios from 'axios'
-
+const BASE_URL="https://hotelmotel-server.herokuapp.com"
 export const getAPICalls =async(url, token) =>{
 
-   const response = await axios.get(`/api/${url}/`, {headers:{
+   const response = await axios.get(`${BASE_URL}/api/${url}/`, {headers:{
        Authorization: `Bearer ${token}`
    }})
 
@@ -11,7 +11,7 @@ export const getAPICalls =async(url, token) =>{
 
 export const postAPICalls =async(url, data, token) =>{
 
-    const response = await axios.post(`/api/${url}/`,data, {headers:{
+    const response = await axios.post(`${BASE_URL}/api/${url}/`,data, {headers:{
         Authorization: `Bearer ${token}`
     }})
     return response

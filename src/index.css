@@ -26,11 +26,18 @@
 }
 .navbar-brand{
   transition: all 300ms ease;
+  display: flex;
+  align-items: center;
 }
 .navbar-brand:hover{
   color: var(--clr-light-red) !important;
 }
-
+.nav-icon{
+  color: var(--clr-light-red);
+}
+.nav-icon:hover{
+  color: var(--clr-gray);
+}
 .wrapper__main{
   padding: 20px;
   background-color: var(--bgclr);

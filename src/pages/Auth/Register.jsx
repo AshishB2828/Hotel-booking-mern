@@ -28,10 +28,15 @@ const Register = () => {
         try {
             setLoading(true)
             const {data} = await postAPICalls('auth/register', user)
+            
             setLoading(false)
             setSuccess(true)
+
+            if (data)
+            window.location.href='/login'
+
         } catch (error) {
-            console.log(error.response)
+            setSuccess(false)
             setLoading(false)
             setErrorMsg(error.response?.data?.message)
             setError(true)

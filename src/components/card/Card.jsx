@@ -12,7 +12,7 @@ const Card = ({room, fromDate, toDate}) => {
         alt="" className="card__img"/>
         <div className="card__body">
             <h2 className="card__title">{room.name.substring(0,20)}...</h2>
-            <p className="card__price">$<span>{room.rentperday}</span></p>
+            <p className="card__price">Rs.<span>{room.rentperday}</span></p>
             <p className="card__type">type: {room.type}</p>
             <div className="btns">
                 <button  onClick={() => setModalShow(true)} className="card__btn">view details</button>
