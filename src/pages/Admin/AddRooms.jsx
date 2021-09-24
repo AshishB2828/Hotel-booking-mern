@@ -33,7 +33,7 @@ const AddRooms = () => {
             const {data} = await postAPICalls('rooms/add', newRoom, jwtToken)
             setLoading(false)
             Swal.fire('Congradulation', 'New Room Added', "success").then(
-                result=> window.location.reload()
+                result=> window.location.href='/'
             )
         } catch (error) {
             setLoading(false)
