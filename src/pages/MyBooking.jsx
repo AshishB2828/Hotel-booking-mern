@@ -9,7 +9,7 @@ const MyBooking = () => {
     const [bookings, setBookings] = useState()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
-    const jwtToken = JSON.parse(localStorage.getItem('hotel_user')).token
+    const jwtToken = JSON.parse(localStorage.getItem('hotel_user'))?.token
     
     const getMyBookings=async()=>{
         try {
